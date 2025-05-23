@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vvvvvv.lv — Сервисы Telegram и WhatsApp | vzshop</title>
+  <meta name="description" content="vvvvvv.lv — платформа vzshop с услугами для Telegram и WhatsApp. Аренда аккаунтов, покупка, помощь и рассылки.">
+  <meta name="keywords" content="vzshop, vvvvvv.lv, телеграм аккаунты, аренда whatsapp, tg bot, телеграм воркеры, telegram рассылка, vzshop бот, tg аккаунты купить, whatsapp маркетинг">
+  <meta name="author" content="vvvvvv.lv">
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #f0faff, #e0f0ff);
+      color: #000;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .logo-bar {
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+
+    .logo-bar img {
+      height: 60px;
+      margin-bottom: 0.5rem;
+    }
+
+    .site-name {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #0088cc;
+      text-shadow: 0 0 5px rgba(0,136,204,0.4);
+    }
+
+    .tagline {
+      font-style: italic;
+      margin-top: 0.5rem;
+      color: #444;
+    }
+
+    .section {
+      margin-top: 4rem;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 1s;
+    }
+
+    .buttons a {
+      display: inline-block;
+      background-color: #0088cc;
+      color: white;
+      padding: 1rem 2rem;
+      margin: 1rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: background 0.3s;
+    }
+
+    .buttons a:hover {
+      background-color: #006fa3;
+    }
+
+    .contact {
+      margin-top: 3rem;
+      font-size: 1.1rem;
+    }
+
+    .contact a {
+      color: #0088cc;
+      text-decoration: none;
+    }
+
+    .news-widget {
+      margin-top: 3rem;
+    }
+
+    iframe {
+      border: none;
+      width: 100%;
+      height: 400px;
+      max-width: 800px;
+    }
+     h1 {
+      text-align: center;
+      color: #0088cc;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    thead {
+      background: #0088cc;
+      color: white;
+    }
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+      background: #f0faff;
+    }
+    a {
+      color: #0088cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
+<style>
+.decor {
+  position: absolute;
+  opacity: 0.15;
+  z-index: 0;
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.decor.usdt { top: 10%; left: 5%; width: 80px; }
+.decor.vz { top: 20%; right: 10%; width: 70px; }
+.decor.star { bottom: 15%; left: 8%; width: 90px; }
+</style>
+
+</head>
+<body>
+  <div class="logo-bar">
+    <img src="vzshop_logo.png" alt="vzshop">
+    <div class="site-name">vvvvvv.lv</div>
+    <div class="tagline">Сайт с различными сервисами и помощью в различных целях</div>
+  </div>
+
+  <div class="section">
+    <h2>Наши Сервисы</h2>
+    <div class="buttons">
+      <a href="whatsapp/index.html">Аренда WhatsApp</a>
+      <a href="telegram_page/index.html">Telegram аккаунты</a>
+    </div>
+
+    <div class="contact">
+      <p>Есть вопросы? <a href="https://t.me/vituzwork">Свяжитесь с нами в Telegram</a></p>
+    </div>
+
+    <div class="news-widget">
+      <h1>Последние новости с SVTV</h1>
+  <table id="rss-table">
+    <thead>
+      <tr>
+        <th>Заголовок</th>
+        <th>Дата</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Новости будут вставлены сюда -->
+    </tbody>
+  </table>
+
+  <script>
+    async function loadRSS() {
+      const proxy = 'https://api.allorigins.win/get?url=';
+      const rssUrl = encodeURIComponent('https://svtv.org/feed/rss/');
+      const response = await fetch(proxy + rssUrl);
+      const data = await response.json();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(data.contents, "text/xml");
+      const items = xml.querySelectorAll("item");
+      const tableBody = document.querySelector("#rss-table tbody");
+      items.forEach(item => {
+        const title = item.querySelector("title").textContent;
+        const link = item.querySelector("link").textContent;
+        const pubDate = new Date(item.querySelector("pubDate").textContent).toLocaleString("ru-RU");
+        const row = `<tr>
+          <td><a href="${link}" target="_blank">${title}</a></td>
+          <td>${pubDate}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    loadRSS();
+  </script>
+    </div>
+  </div>
+
+<img src="1000038968.png" class="decor usdt" alt="USDT">
+<img src="1000038969.jpg" class="decor vz" alt="VZ Logo">
+<img src="1000038970.png" class="decor star" alt="Telegram Star">
+
+</body>
+</html>
